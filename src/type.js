@@ -13,7 +13,7 @@ export type SnackItemType = {
   onCancel?: Function,
 
   // Style
-  style?: Object,
+  style?: Object | Array,
   backgroundColor?: string,
   buttonColor?: string,
   textColor?: string,
