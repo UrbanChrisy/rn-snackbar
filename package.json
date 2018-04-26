@@ -4,6 +4,7 @@
   "description": "A react native snackbar with dialog options",
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "npm run build",
     "prepublish": "npm run build",
     "clean": "rimraf dist",
     "build": "npm run clean && babel src --out-dir dist --source-maps",
@@ -61,7 +62,7 @@
   "homepage": "https://github.com/9gag-open-source/react-native-snackbar-dialog#readme",
   "dependencies": {
     "babel-cli": "^6.18.0",
-    "babel-plugin-flow-react-proptypes": "^17.0.0",
+    "babel-plugin-flow-react-proptypes": "^17.1.2",
     "babel-preset-es2016": "^6.16.0",
     "babel-preset-react-native": "^1.9.1",
     "prop-types": "^15.6.0",
