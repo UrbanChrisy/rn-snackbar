@@ -25,7 +25,7 @@ export type SnackItemType = {
   duration?: number,
   isStatic?: boolean,
   tapToClose?: boolean,
-  
+
   // Content
   renderContent?: Function
 }
