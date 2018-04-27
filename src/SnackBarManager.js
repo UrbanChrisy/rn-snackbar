@@ -1,39 +1,17 @@
 import React from 'react'
 import RootSiblings from 'react-native-root-siblings'
 
-import type {SnackItemType} from './type'
 import SnackBar from './SnackBar'
 
-export default class SnackBarManager {
-    current: SnackItemType;
-    queue: Array<SnackItemType>;
+class SnackBarManager {
+
 
     constructor() {
         this.current = null;
-        this.queue = []
+        this.queue = [];
+
+        this.hideCurrent = null;
     }
-
-    _setCurrent = (props: SnackItemType, callback?: Function = () => {}): void => {
-        if (!('onAutoDismiss' in props)) {
-            props.onAutoDismiss = this.dismiss;
-        }
-
-        const current = new RootSiblings(<SnackBar {...props} />);
-        this.current = current;
-        callback();
-    };
-
-    _removeCurrent = (callback?: Function = () => {}): void => {
-        if (!this.current) {
-            callback()
-            return
-        }
-
-        this.current.destroy(() => {
-            this.current = null;
-            callback()
-        })
-    };
 
     get = () => {
         return {
@@ -42,48 +20,89 @@ export default class SnackBarManager {
         }
     };
 
-    add = (title: string, options?: SnackItemType, callback?: Function = () => {}): void => {
+
+    setCurrent = (props, callback) => {
+        this.current = new RootSiblings(<SnackBar {...this} {...props}/>);
+        if (!!callback) {
+            callback()
+        }
+    };
+
+    setHide = (func) => {
+        this.hideCurrent = func;
+    };
+
+
+    add = (title, options, callback) => {
         const props = {title, ...options};
 
         if (this.current) {
             this.queue.push(props);
-            callback();
+            if (!!callback) {
+                callback()
+            }
             return
         }
 
-        this._setCurrent(props, callback)
+        this.setCurrent(props, callback)
     };
 
-    show = (title: string, options?: SnackItemType, callback?: Function = () => {}): void => {
+    show = (title, options, callback) => {
+
+        console.log(this.current)
         const props = {title, ...options};
 
-        if (this.current) {
-            if (this._isItemAlreadyExistById(props)) {
+        props.onDismiss = (callback) => {
+            this.removeCurrent(callback);
+            if (!!options.onDismiss) {
+                options.onDismiss();
+            }
+        };
+
+
+        if (!!this.current) {
+
+            if (this.isItemAlreadyExistById(props)) {
                 return
             }
-            this.queue.unshift(props)
-            callback();
+
+            this.add(title, options, callback);
             return
         }
 
-        this._setCurrent(props, callback)
+        this.setCurrent(props, callback)
     };
 
-    dismiss = (callback?: Function = () => {}): void => {
-        this._removeCurrent(() => {
+    dismiss = (callback) => {
+        this.hideCurrent(callback);
+    };
+
+    removeCurrent = (callback) => {
+
+        if (!this.current) {
+            if (!!callback) {
+                callback()
+            }
+            return;
+        }
+
+        this.current.destroy(() => {
+            this.current = null;
+            this.hideCurrent = null;
+
             if (!this.queue.length) {
                 callback();
                 return
             }
 
             const current = this.queue.shift();
-            this._setCurrent(current, callback)
+            this.setCurrent(current, callback)
         })
     };
 
-    _isItemAlreadyExistById = (
-        props
-    ): boolean => {
+    isItemAlreadyExistById = (props) => {
         return props.id && this.queue.find(item => item.id === props.id)
     }
 }
+
+export default new SnackBarManager();

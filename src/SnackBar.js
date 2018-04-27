@@ -1,7 +1,5 @@
-// @flow
 
 import React, {Component} from 'react'
-import type {SnackItemType} from './type'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
 
@@ -24,14 +22,16 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'absolute',
         bottom: INITIAL_POSITION_BOTTOM,
-        width
+        left: 0,
+        right: 0,
     },
 
     containerTop: {
         flex: 1,
         position: 'absolute',
         top: INITIAL_POSITION_TOP,
-        width
+        left: 0,
+        right: 0,
     },
 
     text: {
@@ -76,13 +76,6 @@ const styles = StyleSheet.create({
 });
 
 export default class SnackBar extends Component {
-    state: {
-        transformOffsetYTop: any,
-        transformOffsetYBottom: any,
-        transformOpacity: any
-    };
-
-    props: SnackItemType;
 
     static defaultProps = {
         // Behaviour
@@ -105,7 +98,7 @@ export default class SnackBar extends Component {
 
     };
 
-    constructor(props: SnackItemType) {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -116,35 +109,11 @@ export default class SnackBar extends Component {
     }
 
     componentDidMount() {
-        this.show()
-    }
-
-    componentWillUnmount() {
-        if (this.props.isStatic) {
-            this.hide()
-        }
-    }
-
-    show = () => {
-        const {
-            transformOpacity,
-            transformOffsetYTop,
-            transformOffsetYBottom
-        } = this.state;
-
-        const {
-            fadeOutDuration,
-            isStatic,
-            duration,
-            position
-        } = this.props;
-
-        const initialPosition = position === 'top'
-            ? INITIAL_POSITION_TOP
-            : INITIAL_POSITION_BOTTOM;
-        const transformOffsetY = position === 'top'
-            ? transformOffsetYTop
-            : transformOffsetYBottom;
+        this.props.setHide(this.hide);
+        const {transformOpacity, transformOffsetYTop, transformOffsetYBottom} = this.state;
+        const {fadeOutDuration, duration, position, isStatic} = this.props;
+        const initialPosition = position === 'top' ? INITIAL_POSITION_TOP : INITIAL_POSITION_BOTTOM;
+        const transformOffsetY = position === 'top' ? transformOffsetYTop : transformOffsetYBottom;
 
         Animated.parallel([
             Animated.timing(transformOpacity, {
@@ -160,37 +129,26 @@ export default class SnackBar extends Component {
                 useNativeDriver: true
             })
         ]).start(() => {
+
             if (isStatic) {
-                return
+                return;
             }
+
 
             InteractionManager.runAfterInteractions(() => {
                 this.setTimeout(() => {
-                    this.hide()
+                    this.hide(()=>{}, true);
                 }, duration)
             })
         })
-    };
+    }
 
-    hide = () => {
-        const {
-            transformOpacity,
-            transformOffsetYTop,
-            transformOffsetYBottom
-        } = this.state;
+    hide = (callback, isAutoDismiss = false) => {
+        const {transformOpacity, transformOffsetYTop, transformOffsetYBottom} = this.state;
+        const {fadeOutDuration, onAutoDismiss, onDismiss, position} = this.props;
 
-        const {
-            fadeOutDuration,
-            onAutoDismiss,
-            position
-        } = this.props;
-
-        const transformOffsetY = position === 'top'
-            ? transformOffsetYTop
-            : transformOffsetYBottom;
-        const toPosition = position === 'top'
-            ? TO_POSITION_TOP
-            : TO_POSITION_BOTTOM;
+        const transformOffsetY = position === 'top' ? transformOffsetYTop : transformOffsetYBottom;
+        const toPosition = position === 'top' ? TO_POSITION_TOP : TO_POSITION_BOTTOM;
 
         Animated.parallel([
             Animated.timing(transformOpacity, {
@@ -206,13 +164,15 @@ export default class SnackBar extends Component {
                 useNativeDriver: true
             })
         ]).start(() => {
-            onAutoDismiss && onAutoDismiss()
+            onDismiss(callback);
+            if (!!onAutoDismiss && isAutoDismiss) {
+                onAutoDismiss();
+            }
         })
     };
 
-    renderButton = (text: string, onPress: Function = () => {}, style?: Object) => {
+    renderButton = (text, onPress, style) => {
         const {buttonColor} = this.props;
-
         return (
             <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
                 <Text style={[styles.button, style, {color: buttonColor}]}>
@@ -223,17 +183,9 @@ export default class SnackBar extends Component {
     };
 
     renderContent = () => {
-        const {
-            confirmText,
-            onConfirm,
-            cancelText,
-            onCancel,
-            title,
-            textColor,
-            textStyle
-        } = this.props;
+        const {confirmText, onConfirm, cancelText, onCancel, title, textColor, textStyle} = this.props;
 
-        const titleElement = <Text style={[styles.text, {color: textColor}, textStyle]}>{title}</Text>
+        const titleElement = (<Text style={[styles.text, {color: textColor}, textStyle]}>{title}</Text>);
 
         if (confirmText && cancelText) {
             return (
@@ -263,9 +215,8 @@ export default class SnackBar extends Component {
         const {style, renderContent, backgroundColor, position, tapToClose} = this.props;
 
         const isTop = position === 'top';
-        const transformOffsetY = isTop
-            ? this.state.transformOffsetYTop
-            : this.state.transformOffsetYBottom
+        const transformOffsetY = isTop ? this.state.transformOffsetYTop : this.state.transformOffsetYBottom;
+
         return (
             <TouchableWithoutFeedback onPress={() => tapToClose && this.hide()}>
                 <Animated.View
@@ -277,8 +228,7 @@ export default class SnackBar extends Component {
                             backgroundColor
                         },
                         style
-                    ]}
-                >
+                    ]}>
                     {renderContent ? renderContent() : this.renderContent()}
                 </Animated.View>
             </TouchableWithoutFeedback>
