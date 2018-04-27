@@ -3,7 +3,7 @@ import RootSiblings from 'react-native-root-siblings'
 
 import SnackBar from './SnackBar'
 
-class SnackBarManager {
+export default class SnackBarManager {
   constructor () {
     this.current = null
     this.queue = []
@@ -100,5 +100,3 @@ class SnackBarManager {
     return props.id && this.queue.find(item => item.id === props.id)
   }
 }
-
-export default new SnackBarManager()
