@@ -23,7 +23,7 @@ class SnackBarManager {
 
     setCurrent = (props, callback) => {
         this.current = new RootSiblings(<SnackBar {...this} {...props}/>);
-        if (!!callback) {
+        if (!!callback && typeof callback === "function") {
             callback()
         }
     };
@@ -38,7 +38,7 @@ class SnackBarManager {
 
         if (this.current) {
             this.queue.push(props);
-            if (!!callback) {
+            if (!!callback && typeof callback === "function") {
                 callback()
             }
             return
@@ -49,7 +49,6 @@ class SnackBarManager {
 
     show = (title, options, callback) => {
 
-        console.log(this.current)
         const props = {title, ...options};
 
         props.onDismiss = (callback) => {
@@ -58,7 +57,6 @@ class SnackBarManager {
                 options.onDismiss();
             }
         };
-
 
         if (!!this.current) {
 
@@ -80,7 +78,7 @@ class SnackBarManager {
     removeCurrent = (callback) => {
 
         if (!this.current) {
-            if (!!callback) {
+            if (!!callback && typeof callback === "function") {
                 callback()
             }
             return;
@@ -90,14 +88,19 @@ class SnackBarManager {
             this.current = null;
             this.hideCurrent = null;
 
-            if (!this.queue.length) {
-                callback();
-                return
-            }
+            console.log("callback", callback)
 
-            const current = this.queue.shift();
-            this.setCurrent(current, callback)
-        })
+            if (!this.queue.length) {
+                if (!!callback && typeof callback === "function") {
+                    callback();
+                }
+            } else {
+                const current = this.queue.shift();
+                this.setCurrent(current, callback)
+            }
+        });
+
+        console.log(this)
     };
 
     isItemAlreadyExistById = (props) => {

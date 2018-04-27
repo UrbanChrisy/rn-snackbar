@@ -1,16 +1,15 @@
-
 import React, {Component} from 'react'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
 
 import {Animated, Dimensions, Easing, InteractionManager, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native'
 
-const DEFAULT_DURATION: number = 5000;
-const DEFAULT_FADEOUT_DURATION: number = 250;
-const INITIAL_POSITION_BOTTOM: number = -180;
-const INITIAL_POSITION_TOP: number = 0;
-const TO_POSITION_BOTTOM: number = 180;
-const TO_POSITION_TOP: number = -360;
+const DEFAULT_DURATION = 5000;
+const DEFAULT_FADEOUT_DURATION = 250;
+const INITIAL_POSITION_BOTTOM = -180;
+const INITIAL_POSITION_TOP = 0;
+const TO_POSITION_BOTTOM = 180;
+const TO_POSITION_TOP = -360;
 
 const STYLE_BANNER_COLOR: string = '#000000';
 const TEXT_COLOR_ACCENT: string = '#0088ff';
@@ -134,10 +133,10 @@ export default class SnackBar extends Component {
                 return;
             }
 
-
             InteractionManager.runAfterInteractions(() => {
                 this.setTimeout(() => {
-                    this.hide(()=>{}, true);
+                    this.hide(() => {
+                    }, true);
                 }, duration)
             })
         })
@@ -215,13 +214,20 @@ export default class SnackBar extends Component {
         const {style, renderContent, backgroundColor, position, tapToClose} = this.props;
 
         const isTop = position === 'top';
-        const transformOffsetY = isTop ? this.state.transformOffsetYTop : this.state.transformOffsetYBottom;
+
+        let transformOffsetY = this.state.transformOffsetYBottom;
+        let containerStyle = styles.containerBottom;
+
+        if (isTop) {
+            transformOffsetY = this.state.transformOffsetYTop;
+            containerStyle = styles.containerTop;
+        }
+
 
         return (
-            <TouchableWithoutFeedback onPress={() => tapToClose && this.hide()}>
+            <TouchableWithoutFeedback onPress={() => tapToClose && this.hide()} style={{backgroundColor: 'transparent'}}>
                 <Animated.View
-                    style={[
-                        isTop && styles.containerTop || !isTop && styles.containerBottom,
+                    style={[containerStyle,
                         {
                             opacity: this.state.transformOpacity,
                             transform: [{translateY: transformOffsetY}],
