@@ -1,6 +1,6 @@
 # rn-snackbar
 
-# This project was originally created by 9gag, which can be found here https://github.com/9gag-open-source/react-native-snackbar-dialog and say thanks.
+## This project was originally created by 9gag, which can be found here https://github.com/9gag-open-source/react-native-snackbar-dialog and say thanks.
 
 A React Native SnackBar component with configurable dialog. Pull Requests are welcomed.
 
