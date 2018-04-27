@@ -1,10 +1,12 @@
-# react-native-snackbar-dialog
+# rn-snackbar
+
+# This project was originally created by 9gag, which can be found here https://github.com/9gag-open-source/react-native-snackbar-dialog and say thanks.
 
 A React Native SnackBar component with configurable dialog. Pull Requests are welcomed.
 
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-## Why react-native-snackbar-dialog?
+## Why rn-snackbar?
 
 - *Flexible* - Display as a popup message or a dialog
 - *Controllable* - Everything is just JavaScript and React Native
@@ -21,13 +23,13 @@ And also can display as dialog: <br />
 ## Installation
 
 ```sh
-yarn add react-native-snackbar-dialog
+yarn add rn-snackbar
 ```
 
 ## Basic Usage
 
 ```javascript
-import SnackBar from 'react-native-snackbar-dialog'
+import SnackBar from 'rn-snackbar'
 ```
 
 Render inline always shows SnackBar without any buttons.
