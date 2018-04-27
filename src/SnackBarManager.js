@@ -81,8 +81,6 @@ export default class SnackBarManager {
       this.current = null
       this.hideCurrent = null
 
-      console.log('callback', callback)
-
       if (!this.queue.length) {
         if (!!callback && typeof callback === 'function') {
           callback()
@@ -92,8 +90,6 @@ export default class SnackBarManager {
         this.setCurrent(current, callback)
       }
     })
-
-    console.log(this)
   };
 
   isItemAlreadyExistById = (props) => {
