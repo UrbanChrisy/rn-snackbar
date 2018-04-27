@@ -66,7 +66,7 @@ class SnackBarManager {
                 return
             }
 
-            this.add(title, options, callback);
+            this.add(title, props, callback);
             return
         }
 
