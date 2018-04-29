@@ -48,7 +48,7 @@ export default class SnackBarManager {
 
     props.onDismiss = (callback) => {
       this.removeCurrent(callback)
-      if (options.onDismiss) {
+      if (!!options && !!options.onDismiss) {
         options.onDismiss()
       }
     }
