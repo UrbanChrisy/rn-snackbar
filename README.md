@@ -128,7 +128,7 @@ Callback is optional, but it is suggested to use for flow control.
 ```js
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import SnackBar from 'react-native-snackbar-dialog'
+import SnackBar from 'rn-snackbar'
 
 export default class App extends Component {
   onPress = () => {
