@@ -1,15 +1,10 @@
 {
   "name": "rn-snackbar",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A react native snackbar with dialog options",
   "main": "src/index.js",
   "scripts": {
-    "clean": "rimraf dist",
-    "start": "node dist/index.js",
-    "check": "npm run lint && npm run flow && npm test",
-    "lint": "standard --fix",
-    "test": "jest",
-    "flow": "flow"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,26 +20,6 @@
   "bugs": {
     "url": "https://github.com/urbanchrisy/rn-snackbar/issues"
   },
-  "babel": {
-    "presets": [
-      "es2016",
-      "react-native"
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "flow-react-proptypes"
-        ]
-      }
-    }
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "it",
-      "expect"
-    ]
-  },
   "jest": {
     "preset": "react-native",
     "collectCoverage": true,
@@ -57,28 +32,26 @@
     ]
   },
   "homepage": "https://github.com/urbanchrisy/rn-snackbar#readme",
+  "peerDependencies": {
+    "prop-types": "^15.0 || ^16.0",
+    "react": "^16.0",
+    "react-native": "^0.51 || ^0.52 || ^0.53 || ^0.54 || ^0.55"
+  },
   "dependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-plugin-flow-react-proptypes": "^17.1.2",
-    "babel-preset-es2016": "^6.16.0",
-    "babel-preset-react-native": "^1.9.1",
-    "prop-types": "^15.6.0",
-    "react-mixin": "^3.0.0",
-    "react-native-root-siblings": "^2.2.0",
-    "react-timer-mixin": "^0.13.3",
-    "rimraf": "^2.5.4"
+    "react-mixin": "3.0.5",
+    "react-native-root-siblings": "2.2.0",
+    "react-redux": "^5.0.7",
+    "react-timer-mixin": "0.13.3",
+    "static-container": "^1.2.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.1.1",
-    "babel-jest": "^20.0.0",
-    "enzyme": "^2.7.0",
-    "flow-bin": "^0.46.0",
-    "jest": "^20.0.0",
-    "react": "^15.4.2",
+    "enzyme": "3.3.0",
+    "jest": "23.1.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-native": "^0.42.0",
-    "react-test-renderer": "^15.4.2",
-    "standard": "^10.0.0"
+    "react-native": "0.55.4",
+    "react-test-renderer": "16.4.0"
   }
 }

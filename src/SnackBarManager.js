@@ -1,6 +1,5 @@
 import React from 'react'
-import RootSiblings from 'react-native-root-siblings'
-
+import RootSiblings from './RootSiblings'
 import SnackBar from './SnackBar'
 
 export default class SnackBarManager {
@@ -16,18 +15,18 @@ export default class SnackBarManager {
       current: this.current,
       queue: this.queue
     }
-  };
+  }
 
   setCurrent = (props, callback) => {
     this.current = new RootSiblings(<SnackBar {...this} {...props} />)
     if (!!callback && typeof callback === 'function') {
       callback()
     }
-  };
+  }
 
   setHide = (func) => {
     this.hideCurrent = func
-  };
+  }
 
   add = (title, options, callback) => {
     const props = {title, ...options}
@@ -41,7 +40,7 @@ export default class SnackBarManager {
     }
 
     this.setCurrent(props, callback)
-  };
+  }
 
   show = (title, options, callback) => {
     const props = {title, ...options}
@@ -63,11 +62,11 @@ export default class SnackBarManager {
     }
 
     this.setCurrent(props, callback)
-  };
+  }
 
   dismiss = (callback) => {
     this.hideCurrent(callback)
-  };
+  }
 
   removeCurrent = (callback) => {
     if (!this.current) {
@@ -90,7 +89,7 @@ export default class SnackBarManager {
         this.setCurrent(current, callback)
       }
     })
-  };
+  }
 
   isItemAlreadyExistById = (props) => {
     return props.id && this.queue.find(item => item.id === props.id)

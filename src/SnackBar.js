@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
 
-import {Animated, Easing, InteractionManager, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native'
+import { Animated, Easing, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 
 const DEFAULT_DURATION = 5000
 const DEFAULT_FADEOUT_DURATION = 250
@@ -74,17 +74,17 @@ const styles = StyleSheet.create({
 
 export default class SnackBar extends Component {
   static defaultProps = {
-        // Behaviour
+    // Behaviour
     fadeOutDuration: DEFAULT_FADEOUT_DURATION,
     duration: DEFAULT_DURATION,
     isStatic: false,
 
-        // Functions
+    // Functions
     onConfirm: Function,
     onCancel: Function,
     onAutoDismiss: Function,
 
-        // Styles
+    // Styles
     style: {},
     renderContent: null,
     backgroundColor: STYLE_BANNER_COLOR,
@@ -92,7 +92,7 @@ export default class SnackBar extends Component {
     textColor: 'white',
     position: 'bottom'
 
-  };
+  }
 
   constructor (props) {
     super(props)
@@ -128,13 +128,10 @@ export default class SnackBar extends Component {
       if (isStatic) {
         return
       }
-
-      InteractionManager.runAfterInteractions(() => {
-        this.setTimeout(() => {
-          this.hide(() => {
-          }, true)
-        }, duration)
-      })
+      this.setTimeout(() => {
+        this.hide(() => {
+        }, true)
+      }, duration)
     })
   }
 
@@ -164,7 +161,7 @@ export default class SnackBar extends Component {
         onAutoDismiss()
       }
     })
-  };
+  }
 
   renderButton = (text, onPress, style) => {
     const {buttonColor} = this.props
@@ -175,7 +172,7 @@ export default class SnackBar extends Component {
         </Text>
       </TouchableOpacity>
     )
-  };
+  }
 
   renderContent = () => {
     const {confirmText, onConfirm, cancelText, onCancel, title, textColor, textStyle} = this.props
@@ -204,7 +201,7 @@ export default class SnackBar extends Component {
     }
 
     return titleElement
-  };
+  }
 
   render () {
     const {style, renderContent, backgroundColor, position, tapToClose} = this.props
