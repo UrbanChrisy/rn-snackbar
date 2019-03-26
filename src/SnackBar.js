@@ -90,7 +90,9 @@ export default class SnackBar extends Component {
     backgroundColor: STYLE_BANNER_COLOR,
     buttonColor: TEXT_COLOR_ACCENT,
     textColor: 'white',
-    position: 'bottom'
+    position: 'bottom',
+    buttonTextStyle: {},
+    textStyle: {}
 
   }
 
@@ -164,10 +166,10 @@ export default class SnackBar extends Component {
   }
 
   renderButton = (text, onPress, style) => {
-    const {buttonColor} = this.props
+    const {buttonColor, buttonTextStyle} = this.props
     return (
       <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-        <Text style={[styles.button, style, {color: buttonColor}]}>
+        <Text style={[styles.button, style, {color: buttonColor}, buttonTextStyle]}>
           {text}
         </Text>
       </TouchableOpacity>
