@@ -65,7 +65,9 @@ export default class SnackBarManager {
   }
 
   dismiss = (callback) => {
-    this.hideCurrent(callback)
+    if (!!this.hideCurrent) {
+      this.hideCurrent(callback)
+    }
   }
 
   removeCurrent = (callback) => {
