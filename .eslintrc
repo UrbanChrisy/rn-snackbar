@@ -1,0 +1,45 @@
+{
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "rules": {
+    "no-return-assign": "off",
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "curly": [2, "all"],
+    "semi": "error",
+    "quotes": [2, "double", "avoid-escape"],
+    "object-curly-spacing": [2, "always"],
+    "semi-style": ["error", "last"],
+    "no-use-before-define": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-first-prop-new-line": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "react/jsx-tag-spacing": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/forbid-prop-types": "off",
+    "react/prop-types": "off",
+    "prefer-destructuring": "off",
+    "import/no-cycle": "off",
+    "comma-dangle": "off",
+    "object-shorthand": "off",
+    "no-param-reassign": "off",
+    "no-console": "off",
+    "react/destructuring-assignment": "off",
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": 0,
+    "react/jsx-fragments": 0,
+    "react/jsx-props-no-spreading": 0,
+    "import/prefer-default-export": "off",
+    "no-extra-boolean-cast": "off"
+  },
+  "globals": {
+    "fetch": false
+  }
+}

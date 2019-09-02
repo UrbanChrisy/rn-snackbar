@@ -1,3 +1,3 @@
-import SnackBarManager from './SnackBarManager'
+import SnackBarManager from "./SnackBarManager";
 
-export default new SnackBarManager()
+export default new SnackBarManager();
