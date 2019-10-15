@@ -1,4 +1,4 @@
-# rn-snackbar
+# rn-snackbar - No longer maintained
 
 ## This project was originally created by 9gag, which can be found here https://github.com/9gag-open-source/react-native-snackbar-dialog and say thanks.
 
